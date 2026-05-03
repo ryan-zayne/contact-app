@@ -1,0 +1,75 @@
+meta {
+  name: Update User Profile
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{base_url}}/api/users/update-profile
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body {
+  {
+    "username": "updateduser",
+    "email": "updated@example.com",
+    "password": "newpassword123"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Update User Profile
+
+  Updates the current user's profile information. All fields are optional.
+
+  ## Authentication
+
+  Requires Bearer token authentication.
+
+  ## Request Body
+
+  All fields are optional for partial updates.
+
+  - `username` (string, optional): The user's display name
+  - `email` (string, optional): The user's email address
+  - `password` (string, optional): The user's new password (will be hashed)
+
+  ## Success Response (200 OK)
+
+  ```json
+  {
+    "username": "updateduser",
+    "email": "updated@example.com"
+  }
+  ```
+
+  ## Error Response (404 Not Found)
+
+  When user is not found:
+
+  ```json
+  {
+    "message": "User not found"
+  }
+  ```
+
+  ## Error Response (401 Unauthorized)
+
+  When authentication token is missing or invalid:
+
+  ```json
+  {
+    "message": "Please ensure to set the authorization header!"
+  }
+  ```
+}

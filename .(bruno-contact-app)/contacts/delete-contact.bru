@@ -1,0 +1,80 @@
+meta {
+  name: Delete Contact
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{base_url}}/api/contacts/{{contact_id}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Delete Contact
+
+  Deletes a contact by its ID. Only the contact owner can delete it.
+
+  ## Authentication
+
+  Requires Bearer token authentication.
+
+  ## URL Parameters
+
+  - `id` (string): The contact's unique identifier
+
+  ## Success Response (200 OK)
+
+  ```json
+  {
+    "deletedContact": {
+      "_id": "60d5ecb74b24c72b8c8b4567",
+      "user_id": "60d5ecb74b24c72b8c8b4568",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "phone": "+1234567890",
+      "__v": 0
+    },
+    "message": "Contact deleted successfully!"
+  }
+  ```
+
+  ## Error Response (404 Not Found)
+
+  When contact does not exist:
+
+  ```json
+  {
+    "message": "Contact not found"
+  }
+  ```
+
+  ## Error Response (403 Forbidden)
+
+  When trying to delete another user's contact:
+
+  ```json
+  {
+    "message": "You are forbidden from accessing another user's contact"
+  }
+  ```
+
+  ## Error Response (401 Unauthorized)
+
+  When authentication token is missing or invalid:
+
+  ```json
+  {
+    "message": "Please ensure to set the authorization header!"
+  }
+  ```
+}

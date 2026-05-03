@@ -1,0 +1,70 @@
+meta {
+  name: Login User
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/users/login
+  body: json
+  auth: none
+}
+
+body {
+  {
+    "email": "test@example.com",
+    "password": "password123"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+tests {
+  setvar token = res.body.encodedToken;
+}
+
+docs {
+  # Login User
+
+  Authenticates a user and returns a JWT token for subsequent requests.
+
+  ## Request Body
+
+  All fields are required.
+
+  - `email` (string): The user's email address
+  - `password` (string): The user's password
+
+  ## Success Response (200 OK)
+
+  ```json
+  {
+    "encodedToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+  ```
+
+  Note: The token expires in 5 minutes.
+
+  ## Error Response (400 Bad Request)
+
+  When required fields are missing:
+
+  ```json
+  {
+    "message": "All fields are mandatory!"
+  }
+  ```
+
+  ## Error Response (401 Unauthorized)
+
+  When email or password is invalid:
+
+  ```json
+  {
+    "message": "Email or password is invalid"
+  }
+  ```
+}

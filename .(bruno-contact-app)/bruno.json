@@ -1,0 +1,9 @@
+{
+	"version": "1",
+	"name": ".(bruno-contact-app)",
+	"type": "collection",
+	"ignore": ["node_modules", ".git"],
+	"vars": {
+		"base_url": "http://localhost:5001"
+	}
+}

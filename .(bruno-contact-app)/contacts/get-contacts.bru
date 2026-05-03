@@ -1,0 +1,75 @@
+meta {
+  name: Get All Contacts
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/contacts
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Get All Contacts
+
+  Retrieves all contacts belonging to the authenticated user.
+
+  ## Authentication
+
+  Requires Bearer token authentication. Only returns contacts owned by the authenticated user.
+
+  ## Success Response (200 OK)
+
+  Returns an array of contact objects:
+
+  ```json
+  [
+    {
+      "_id": "60d5ecb74b24c72b8c8b4567",
+      "user_id": "60d5ecb74b24c72b8c8b4568",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "phone": "+1234567890",
+      "__v": 0
+    },
+    {
+      "_id": "60d5ecb74b24c72b8c8b4569",
+      "user_id": "60d5ecb74b24c72b8c8b4568",
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "phone": "+0987654321",
+      "__v": 0
+    }
+  ]
+  ```
+
+  ## Error Response (404 Not Found)
+
+  When user has no contacts:
+
+  ```json
+  {
+    "message": "Contacts not found"
+  }
+  ```
+
+  ## Error Response (401 Unauthorized)
+
+  When authentication token is missing or invalid:
+
+  ```json
+  {
+    "message": "Please ensure to set the authorization header!"
+  }
+  ```
+}

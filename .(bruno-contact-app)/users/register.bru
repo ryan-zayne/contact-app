@@ -1,0 +1,74 @@
+meta {
+  name: Register User
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/api/users/register
+  body: json
+  auth: none
+}
+
+body {
+  {
+    "username": "testuser",
+    "email": "test@example.com",
+    "password": "password123"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Register User
+
+  Creates a new user account.
+
+  ## Request Body
+
+  All fields are required.
+
+  - `username` (string): The user's display name
+  - `email` (string): The user's email address (must be unique)
+  - `password` (string): The user's password (will be hashed)
+
+  ## Success Response (201 Created)
+
+  ```json
+  {
+    "id": "60d5ecb74b24c72b8c8b4567",
+    "username": "testuser",
+    "email": "test@example.com"
+  }
+  ```
+
+  ## Error Response (400 Bad Request)
+
+  When required fields are missing:
+
+  ```json
+  {
+    "message": "All fields are mandatory!"
+  }
+  ```
+
+  When email is already registered:
+
+  ```json
+  {
+    "message": "User already registered!"
+  }
+  ```
+
+  When user data is invalid:
+
+  ```json
+  {
+    "message": "User data is not valid"
+  }
+  ```
+}

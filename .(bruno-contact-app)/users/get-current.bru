@@ -1,0 +1,50 @@
+meta {
+  name: Get Current User
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/api/users/current
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Get Current User
+
+  Retrieves information about the currently authenticated user.
+
+  ## Authentication
+
+  Requires Bearer token authentication.
+
+  ## Success Response (200 OK)
+
+  ```json
+  {
+    "_id": "60d5ecb74b24c72b8c8b4567",
+    "username": "testuser",
+    "email": "test@example.com"
+  }
+  ```
+
+  ## Error Response (401 Unauthorized)
+
+  When user is not found or token is invalid:
+
+  ```json
+  {
+    "message": "User not found"
+  }
+  ```
+}
